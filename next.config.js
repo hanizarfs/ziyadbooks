@@ -10,10 +10,6 @@ const nextConfig = {
                 protocol: "https",
                 hostname: "ziyadbooks.com",
             },
-            {
-                protocol: "https",
-                hostname: "seeklogo.com",
-            },
         ],
     },
 };
