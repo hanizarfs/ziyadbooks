@@ -1,11 +1,12 @@
 import ProductCard from "@/components/ProductCard";
 import { Product } from "@/src/types/product";
+import Link from "next/link";
 
 export default function FeaturedProducts({ products }: { products: Product[] }) {
     const featured = products.slice(0, 4);
 
     return (
-        <section className="py-16 bg-green-50">
+        <section id="produk" className="py-16 bg-green-50">
             <div className="max-w-7xl mx-auto px-4">
 
                 {/* HEADER */}
@@ -19,9 +20,9 @@ export default function FeaturedProducts({ products }: { products: Product[] }) 
                         </p>
                     </div>
 
-                    <button className="text-sm text-green-600 hover:underline">
+                    <Link href="products" className="text-sm text-green-600 hover:underline">
                         Lihat Semua
-                    </button>
+                    </Link>
                 </div>
 
                 {/* GRID */}

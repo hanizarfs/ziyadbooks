@@ -70,14 +70,6 @@ export default function NavbarHero({ products }: Props) {
                             </Link>
 
                             {/* MENU DESKTOP */}
-                            <nav className="hidden lg:flex items-center gap-6 text-sm font-medium">
-                                <a href="#beranda" className="hover:text-green-600 transition">Beranda</a>
-                                <Link href="/products" className="hover:text-green-600 transition">Produk</Link>
-                                <a href="#" className="hover:text-green-600 transition">Kategori</a>
-                                <a href="#" className="hover:text-green-600 transition">Promo</a>
-                                <a href="#" className="hover:text-green-600 transition">Tentang</a>
-                            </nav>
-
                         </div>
 
                         {/* ================= CENTER (SEARCH) ================= */}
@@ -92,14 +84,14 @@ export default function NavbarHero({ products }: Props) {
                             <div className="hidden md:flex items-center gap-3 text-gray-600">
 
                                 {/* CART */}
-                                <button className="hover:text-green-600 transition">
+                                <Link href="cart" className="hover:text-green-600 transition">
                                     <ShoppingCart className="w-5 h-5" />
-                                </button>
+                                </Link>
 
                                 {/* USER */}
-                                <button className="hover:text-green-600 transition">
+                                <Link href="https://ziyadbooks.com/member/login" className="hover:text-green-600 transition">
                                     <User className="w-5 h-5" />
-                                </button>
+                                </Link>
                             </div>
 
                             {/* CTA */}
@@ -129,18 +121,18 @@ export default function NavbarHero({ products }: Props) {
                             />
 
                             {/* MENU */}
-                            <div className="flex flex-col gap-3 text-sm">
+                            {/* <div className="flex flex-col gap-3 text-sm">
                                 <a href="#">Beranda</a>
                                 <a href="#">Produk</a>
                                 <a href="#">Kategori</a>
                                 <a href="#">Promo</a>
                                 <a href="#">Tentang</a>
-                            </div>
+                            </div> */}
 
                             {/* CTA */}
-                            <button className="w-full bg-green-600 text-white py-2 rounded-xl">
+                            <Link href="products" className="w-full bg-green-600 text-white py-2 rounded-xl">
                                 Belanja Sekarang
-                            </button>
+                            </Link>
                         </div>
                     )}
                 </div>
@@ -163,20 +155,20 @@ export default function NavbarHero({ products }: Props) {
 
                     {/* CTA */}
                     <div className="flex gap-3">
-                        <button className="bg-green-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-green-700 transition">
+                        <a href="#produk" className="bg-green-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-green-700 transition">
                             Belanja Sekarang
-                        </button>
+                        </a>
 
-                        <button className="border px-6 py-3 rounded-xl font-medium hover:bg-gray-100 transition">
+                        <Link href="products" className="border px-6 py-3 rounded-xl font-medium hover:bg-gray-100 transition">
                             Lihat Katalog
-                        </button>
+                        </Link>
                     </div>
                 </div>
 
                 {/* IMAGE */}
                 <div className="relative w-full h-75 md:h-100">
                     <Image
-                        src="https://ziyadbooks.com/storage/ziyad/logonew.svg"
+                        src="/hero.webp"
                         alt="Buku Islami"
                         fill
                         className="object-cover rounded-2xl shadow-lg"

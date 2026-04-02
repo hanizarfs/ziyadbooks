@@ -18,12 +18,12 @@ export default function AllProductsPage() {
                 const res = await fetch(
                     "https://api-dev.ziyadbooks.com/api/v1/ecommerce/auth/products/all/category",
                     {
+                        method: "GET",
                         headers: {
-                            Authorization:
-                                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNiIsImVtYWlsIjoiZXNwbG9yYW1lZGlhQGdtYWlsLmNvbSIsImlhdCI6MTc3NTAwMzYwMCwiZXhwIjoxNzc1MTMzMjAwfQ.QUJXtxQMd8FSQ38B1LTncQ2dgNQd_8Tv1YPB121u7W4",
+                            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNiIsImVtYWlsIjoiZXNwbG9yYW1lZGlhQGdtYWlsLmNvbSIsImlhdCI6MTc3NTAwMzYwMCwiZXhwIjoxNzc1MTMzMjAwfQ.QUJXtxQMd8FSQ38B1LTncQ2dgNQd_8Tv1YPB121u7W4`,
                             "Content-Type": "application/json",
                         },
-                        cache: "no-store",
+                        next: { revalidate: 60 },
                     }
                 );
 

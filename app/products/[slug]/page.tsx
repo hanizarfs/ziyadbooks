@@ -41,6 +41,7 @@ export default async function ProductDetail({ params }: Props) {
 
     return (
         <div className="bg-white min-h-screen">
+
             <div className="max-w-7xl mx-auto px-4 py-10">
 
                 {/* 🔗 BREADCRUMB */}
