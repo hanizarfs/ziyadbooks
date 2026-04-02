@@ -1,10 +1,10 @@
-// app/products/[slug]/page.tsx
+import { getProducts } from "@/lib/api";
 import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/src/types/product";
 import ProductCard from "@/components/ProductCard";
+
 import AddToCartButton from "@/components/AddToCartButton";
-import { getProducts } from "@/lib/api";
 
 type Props = {
     params: {
@@ -13,38 +13,26 @@ type Props = {
 };
 
 export default async function ProductDetail({ params }: Props) {
-    // ✅ Unwrap params
-    const { slug } = params;
+    const { slug } = await params;
 
-    // fetch semua produk (runtime)
     const res = await getProducts();
     const products: Product[] = res?.data?.data || [];
 
-    // console.log untuk debug di Vercel
-    console.log("slug dari URL:", slug);
-    console.log("slug semua produk:", products.map((p) => p.slug));
+    const product = products.find((item) => item.slug === slug);
 
-    // Cari produk berdasarkan slug, decode + lowercase
-    const product = products.find(
-        (item) =>
-            decodeURIComponent(item.slug).toLowerCase() ===
-            decodeURIComponent(slug).toLowerCase()
-    );
+    // ambil rekomendasi (exclude produk ini)
+    const relatedProducts = products
+        .filter((item) => item.slug !== slug)
+        .slice(0, 4);
 
     if (!product) {
         return <div className="p-10 text-center">Produk tidak ditemukan</div>;
     }
 
-    // Ambil rekomendasi (exclude produk ini)
-    const relatedProducts = products
-        .filter((item) => item.slug !== product.slug)
-        .slice(0, 4);
-
-    // Stok label
+    // Stok kategori
     const stokLabel = () => {
         if (product.sisastok === 0) return { text: "Kosong", bg: "bg-red-500" };
-        if (product.sisastok > 0 && product.sisastok <= 50)
-            return { text: "Menipis", bg: "bg-yellow-500" };
+        if (product.sisastok > 0 && product.sisastok <= 50) return { text: "Menipis", bg: "bg-yellow-500" };
         return { text: "Tersedia", bg: "bg-green-500" };
     };
 
@@ -54,41 +42,31 @@ export default async function ProductDetail({ params }: Props) {
     return (
         <div className="bg-white min-h-screen">
             <div className="max-w-7xl mx-auto px-4 py-10">
+
                 {/* 🔗 BREADCRUMB */}
                 <div className="text-sm text-gray-500 mb-6">
-                    <Link href="/" className="hover:text-black">
-                        Home
-                    </Link>
+                    <Link href="/" className="hover:text-black">Home</Link>
                     <span className="mx-2">›</span>
                     <span>Detail Produk</span>
                 </div>
 
                 {/* 🔥 MAIN GRID */}
                 <div className="grid md:grid-cols-2 gap-10">
+
                     {/* IMAGE */}
                     <div className="relative w-full h-100 bg-gray-100 rounded-2xl overflow-hidden">
-                        {product.image_url ? (
-                            <Image
-                                src={product.image_url}
-                                alt={product.name}
-                                fill
-                                className="object-cover"
-                            />
-                        ) : (
-                            <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500">
-                                No Image
-                            </div>
-                        )}
-
+                        <Image
+                            src={product.image_url}
+                            alt={product.name}
+                            fill
+                            className="object-cover"
+                        />
                         {isOutOfStock && (
                             <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-xl font-bold">
                                 KOSONG
                             </div>
                         )}
-
-                        <div
-                            className={`absolute top-3 left-3 px-3 py-1 text-xs font-semibold text-white rounded ${stokBg}`}
-                        >
+                        <div className={`absolute top-3 left-3 px-3 py-1 text-xs font-semibold text-white rounded ${stokBg}`}>
                             {stokText}
                         </div>
                     </div>
@@ -105,7 +83,7 @@ export default async function ProductDetail({ params }: Props) {
                                 {product.final_price_formatted}
                             </span>
 
-                            {Number(product.diskon) !== 0 && (
+                            {product.diskon !== "0" && (
                                 <span className="text-gray-400 line-through">
                                     {product.price_formatted}
                                 </span>
@@ -123,18 +101,10 @@ export default async function ProductDetail({ params }: Props) {
 
                         {/* INFO DETAIL */}
                         <div className="grid grid-cols-2 gap-4 text-sm text-gray-600 mb-6">
-                            <p>
-                                <b>Berat:</b> {product.weight} gr
-                            </p>
-                            <p>
-                                <b>Jenis:</b> Buku Anak
-                            </p>
-                            <p>
-                                <b>Bahasa:</b> Indonesia
-                            </p>
-                            <p>
-                                <b>Ukuran:</b> 20 x 20 cm
-                            </p>
+                            <p><b>Berat:</b> {product.weight} gr</p>
+                            <p><b>Jenis:</b> Buku Anak</p>
+                            <p><b>Bahasa:</b> Indonesia</p>
+                            <p><b>Ukuran:</b> 20 x 20 cm</p>
                         </div>
 
                         {/* CTA */}
@@ -144,12 +114,13 @@ export default async function ProductDetail({ params }: Props) {
 
                         {/* DESKRIPSI */}
                         <div className="text-gray-700 text-sm leading-relaxed space-y-3">
-                            <h3 className="font-semibold text-base">Deskripsi Produk</h3>
+                            <h3 className="font-semibold text-base">
+                                Deskripsi Produk
+                            </h3>
 
                             <p>
                                 Hadir dengan tampilan menarik dan edukatif untuk anak-anak muslim.
-                                Produk ini dirancang untuk membantu anak belajar dengan cara yang
-                                menyenangkan.
+                                Produk ini dirancang untuk membantu anak belajar dengan cara yang menyenangkan.
                             </p>
 
                             <ul className="list-disc ml-5 space-y-1">
@@ -165,7 +136,9 @@ export default async function ProductDetail({ params }: Props) {
 
                 {/* 🔥 RELATED PRODUCTS */}
                 <div className="mt-16">
-                    <h2 className="text-xl font-bold mb-6">Produk Lainnya</h2>
+                    <h2 className="text-xl font-bold mb-6">
+                        Produk Lainnya
+                    </h2>
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                         {relatedProducts.map((item) => (
@@ -173,6 +146,7 @@ export default async function ProductDetail({ params }: Props) {
                         ))}
                     </div>
                 </div>
+
             </div>
         </div>
     );

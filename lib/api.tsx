@@ -9,7 +9,7 @@ export async function getProducts() {
                     Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNiIsImVtYWlsIjoiZXNwbG9yYW1lZGlhQGdtYWlsLmNvbSIsImlhdCI6MTc3NTAwMzYwMCwiZXhwIjoxNzc1MTMzMjAwfQ.QUJXtxQMd8FSQ38B1LTncQ2dgNQd_8Tv1YPB121u7W4`,
                     "Content-Type": "application/json",
                 },
-                cache: "no-store",
+                next: { revalidate: 60 }, // ✅ refresh cache tiap 60 detik
             }
         );
 
