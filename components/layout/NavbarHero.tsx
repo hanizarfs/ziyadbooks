@@ -95,9 +95,9 @@ export default function NavbarHero({ products }: Props) {
                             </div>
 
                             {/* CTA */}
-                            <button className="hidden md:block bg-green-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-green-700 transition">
+                            <a href="#produk" className="hidden md:block bg-green-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-green-700 transition">
                                 Belanja
-                            </button>
+                            </a>
 
                             {/* MOBILE BUTTON */}
                             <button
